@@ -1,16 +1,16 @@
 class Node:
-    def __init__(self, value, pointer_to_next_node_and_also_the_new_node=None):
+    def __init__(self, value, next_pan=None):
         self.value = value
-        self.pointer_to_next_node_and_also_the_new_node = pointer_to_next_node_and_also_the_new_node
+        self.next_pan = next_pan
 
     def get_value(self):
         return self.value
 
     def get_next(self):
-        return self.pointer_to_next_node_and_also_the_new_node
+        return self.next_pan
 
-    def set_pointer_to_next_node_and_also_the_new_node(self, new_pointer_to_next_node_and_also_the_new_node):
-        self.pointer_to_next_node_and_also_the_new_node = new_pointer_to_next_node_and_also_the_new_node
+    def set_next_pan(self, new_next_pan):
+        self.next_pan = new_next_pan
 
 
 class LinkedList:
@@ -25,7 +25,7 @@ class LinkedList:
             self.head = new_node
         else:
             # current tail's pointer is set to the new node
-            self.tail.pointer_to_next_node_and_also_the_new_node = new_node
+            self.tail.next_pan = new_node
             # the new tail is now the new node
             self.tail = new_node
 
@@ -43,7 +43,7 @@ class LinkedList:
             while current_node.get_next() != self.tail:
                 current_node = current_node.get_next()
             self.tail = current_node
-            self.tail.set_pointer_to_next_node_and_also_the_new_node(None)
+            self.tail.set_next_pan(None)
             return value
 
     def add_to_head(self, value):
@@ -52,7 +52,7 @@ class LinkedList:
             self.tail = new_node
             self.head = new_node
         else:
-            new_node.pointer_to_next_node_and_also_the_new_node = self.head
+            new_node.next_pan = self.head
             self.head = new_node
 
     def remove_head(self):

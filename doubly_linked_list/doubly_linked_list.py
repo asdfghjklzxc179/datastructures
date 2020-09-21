@@ -1,8 +1,3 @@
-"""
-Each Node holds a reference to its prev_panious node
-as well as its next_pan node in the List.
-"""
-
 
 class Node:
     def __init__(self, value, prev_pan=None, next_pan=None):
@@ -13,6 +8,12 @@ class Node:
     def set_next_pan(self, new_next_pan):
         self.next_pan = new_next_pan
         print(self.next_pan)
+
+    def get_value(self):
+        return self.value
+
+    def get_next(self):
+        return self.next_pan
 
 
 """
@@ -57,7 +58,17 @@ class DoublyLinkedList:
     """
 
     def remove_from_head(self):
-        pass
+        if self.head is None and self.tail is None:
+            return None
+        if self.head == self.tail:
+            value = self.head.get_value()
+            self.head = None
+            self.tail = None
+            return value
+        else:
+            value = self.head.get_value()
+            self.head = self.head.get_next()
+            return value
 
     """
     Wraps the given value in a Node and inserts it 
@@ -125,3 +136,7 @@ print(str(the_double_linked_list.head))
 
 
 print(str(the_double_linked_list))
+
+the_double_linked_list.remove_from_head()
+print(str(the_double_linked_list))
+print(str(the_double_linked_list.head))
