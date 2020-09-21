@@ -15,6 +15,14 @@ class Node:
     def get_next(self):
         return self.next_pan
 
+    def get_prev(self):
+        return self.prev_pan
+
+    def get_node(self, node):
+        while node is not None:
+            if node == self.value:
+                return node
+
 
 """
 Our doubly-linked list class. It holds references to 
@@ -44,12 +52,15 @@ class DoublyLinkedList:
             self.tail = new_node
             self.length += 1
             print(self.head)
+            print(self.length)
+
         else:
             self.head.prev_pan = new_node
             new_node.next_pan = self.head
             self.head = new_node
             self.length += 1
             print(self.head)
+            print(self.length)
 
     """
     Removes the List's current head node, making the
@@ -64,10 +75,17 @@ class DoublyLinkedList:
             value = self.head.get_value()
             self.head = None
             self.tail = None
+            self.length -= 1
+            print(self.length)
+
             return value
+
         else:
             value = self.head.get_value()
             self.head = self.head.get_next()
+            self.length -= 1
+            print(self.length)
+
             return value
 
     """
@@ -77,7 +95,21 @@ class DoublyLinkedList:
     """
 
     def add_to_tail(self, value):
-        pass
+        new_node = Node(value)
+        if self.tail is None:
+            self.tail = new_node
+            self.head = new_node
+            self.length -= 1
+            print(self.tail)
+            print(self.length)
+
+        else:
+            self.tail.next_pan = new_node
+            new_node.prev_pan = self.tail
+            self.tail = new_node
+            self.length += 1
+            print(self.tail)
+            print(self.length)
 
     """
     Removes the List's current tail node, making the 
@@ -86,7 +118,28 @@ class DoublyLinkedList:
     """
 
     def remove_from_tail(self):
-        pass
+        if self.head is None and self.tail is None:
+            return None
+        if self.head == self.tail:
+            value = self.tail.get_value()
+            self.head = None
+            self.tail = None
+            self.length -= 1
+            print(self.length)
+
+            return value
+
+        else:
+            value = self.tail.get_value()
+            self.tail = self.tail.get_prev()
+            self.tail.next_pan = None
+            print(self.tail.get_next())
+            self.tail.prev_pan = self.tail.get_prev()
+            self.next_pan = self.tail.prev_pan
+            self.length -= 1
+            print(self.length)
+
+            return value
 
     """
     Removes the input node from its current spot in the 
@@ -94,8 +147,13 @@ class DoublyLinkedList:
     """
 
     def move_to_front(self, node):
-        pass
-
+        new_front = Node(node).get_node()
+        old_front = self.head
+        self.head.prev_pan = new_front
+        self.head = new_front
+        self.head.next_pan = old_front
+        print(self.head)
+        print(new_front)
     """
     Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List.
@@ -124,19 +182,17 @@ class DoublyLinkedList:
 the_double_linked_list = DoublyLinkedList()
 
 the_double_linked_list.add_to_head(1)
-print(str(the_double_linked_list.head))
 print(str(the_double_linked_list))
 
 the_double_linked_list.add_to_head(2)
-print(str(the_double_linked_list.head))
 print(str(the_double_linked_list))
 
 the_double_linked_list.add_to_head(7453)
-print(str(the_double_linked_list.head))
-
-
 print(str(the_double_linked_list))
 
 the_double_linked_list.remove_from_head()
+
 print(str(the_double_linked_list))
 print(str(the_double_linked_list.head))
+
+the_double_linked_list.move_to_front(2)
