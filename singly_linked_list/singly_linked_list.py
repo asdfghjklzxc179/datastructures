@@ -1,16 +1,16 @@
 class Node:
-    def __init__(self, value, next_node=None):
+    def __init__(self, value, pointer_to_next_node_and_also_the_new_node=None):
         self.value = value
-        self.next_node = next_node
+        self.pointer_to_next_node_and_also_the_new_node = pointer_to_next_node_and_also_the_new_node
 
-    def get_value(self)
-    return self.value
+    def get_value(self):
+        return self.value
 
-    def get_next(self)
-    return self.next_node
+    def get_next(self):
+        return self.pointer_to_next_node_and_also_the_new_node
 
-    def set_next(self, new_next)
-    self.next_node = new_next
+    def set_pointer_to_next_node_and_also_the_new_node(self, new_pointer_to_next_node_and_also_the_new_node):
+        self.pointer_to_next_node_and_also_the_new_node = new_pointer_to_next_node_and_also_the_new_node
 
 
 class LinkedList:
@@ -24,7 +24,9 @@ class LinkedList:
             self.tail = new_node
             self.head = new_node
         else:
-            self.tail.set_next(new_node)
+            # current tail's pointer is set to the new node
+            self.tail.pointer_to_next_node_and_also_the_new_node = new_node
+            # the new tail is now the new node
             self.tail = new_node
 
     def remove_tail(self):
@@ -41,17 +43,16 @@ class LinkedList:
             while current_node.get_next() != self.tail:
                 current_node = current_node.get_next()
             self.tail = current_node
-            self.tail.set_next(None)
+            self.tail.set_pointer_to_next_node_and_also_the_new_node(None)
             return value
 
     def add_to_head(self, value):
         new_node = Node(value)
-
         if self.tail is None and self.head is None:
-            self.head = new_node
             self.tail = new_node
+            self.head = new_node
         else:
-            new_node.set_next(self.head)
+            new_node.pointer_to_next_node_and_also_the_new_node = self.head
             self.head = new_node
 
     def remove_head(self):
@@ -66,3 +67,22 @@ class LinkedList:
             value = self.head.get_value()
             self.head = self.head.get_next()
             return value
+
+    def insert_after(self, value):
+        current_next = self.next
+        self.next = ListNode(value, self, current_next)
+        if current_next:
+            current_next.prev = self.next
+    # def set_previous?
+
+    def insert_before(self, value):
+        current_prev = self.prev
+        self.prev = ListNode(value, current_prev, self)
+        if current_prev:
+            current_prev.next = self.prev
+
+    def delete(self):
+        if self.prev:
+            self.prev.next = self.next
+        if self.next:
+            self.next.prev = self.prev
