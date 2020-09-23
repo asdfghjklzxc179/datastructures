@@ -168,8 +168,6 @@ class DoublyLinkedList:
     """
 
     def delete(self, node):
-        pass
-
     """
     Finds and returns the maximum value of all the nodes 
     in the List.
